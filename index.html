@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Memory Game</title>
+</head>
+
+<body>
+    <div id="block"></div>
+    <header>
+        <h1>Memory Game</h1>
+    </header>
+    <main>
+        <div class="numbers">
+            <div id="1" class="box" onclick="updateCol(0)"></div>
+            <div id="2" class="box" onclick="updateCol(1)"></div>
+            <div id="3" class="box" onclick="updateCol(2)"></div>
+            <div id="4" class="box" onclick="updateCol(3)"></div>
+            <div id="5" class="box" onclick="updateCol(4)"></div>
+            <div id="6" class="box" onclick="updateCol(5)"></div>
+            <div id="7" class="box" onclick="updateCol(6)"></div>
+            <div id="8" class="box" onclick="updateCol(7)"></div>
+            <div id="9" class="box" onclick="updateCol(8)"></div>
+            <div id="10" class="box" onclick="updateCol(9)"></div>
+            <div id="11" class="box" onclick="updateCol(10)"></div>
+            <div id="12" class="box" onclick="updateCol(11)"></div>
+            <div id="13" class="box" onclick="updateCol(12)"></div>
+            <div id="14" class="box" onclick="updateCol(13)"></div>
+            <div id="15" class="box" onclick="updateCol(14)"></div>
+            <div id="16" class="box" onclick="updateCol(15)"></div>
+        </div>
+    </main>
+    <footer>
+        <h2 id="step" class="fooBox">Step: 0</h2>
+        <h1 id="timer" class="fooBox">00:00</h1>
+        <button id="newGame" class="fooBox">NEW GAME</button>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
