@@ -5,6 +5,7 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 function getColour() {
+    const liters = ["A", "F", "C"];
     let col = "#";
     for (var i = 0; i < 6; i++) {
         if (Math.random() < 0.5) {
@@ -45,6 +46,9 @@ class TimeGame {
         this.timer.textContent = `${min}:${sec}`;
     }
     timeStart() {
+        if (!this.but) {
+            this.but = true;
+        }
         const getTimes = () => {
             if (this.but) {
                 if (this.sec < 59) {
@@ -62,27 +66,30 @@ class TimeGame {
         this.but = false;
     }
     resetTimer() {
+        if (this.but){
+            this.timeEnd();
+        }
         this.min = 0;
         this.sec = 0;
         this.getTime();
     }
 }
 
-
-
-const userStep = new Step();
-const liters = ["A", "F", "C"];
-const colorBox = [];
-for (var i = 0; i < 16; i += 2) {
-    colorBox.push(getColour());
-    colorBox.push(colorBox[i]);
+function colorBoxBorder() {
+    const colorBoxes = [];
+    for (var i = 0; i < 16; i += 2) {
+        colorBoxes.push(getColour());
+        colorBoxes.push(colorBoxes[i]);
+    }
+    for (var i = 0; i < 100; i++) {
+        let tmp = colorBoxes.splice(getRandomInt(
+            16), 1)[0];
+        colorBoxes.splice(getRandomInt(16), 0, tmp);
+    }
+    return colorBoxes
 }
-for (var i = 0; i < 100; i++) {
-    let tmp = colorBox.splice(getRandomInt(
-        16), 1)[0];
-    colorBox.splice(getRandomInt(16), 0, tmp);
-}
 
+let colorBox = colorBoxBorder();
 const gameBord = [];
 for (var i = 0; i < colorBox.length; i++) {
     gameBord.push(0);
@@ -95,16 +102,34 @@ const colorTwo = {
     id: null,
 };
 
+const userStep = new Step();
 
 
 let tmp = 0;
 const theTimer = new TimeGame();
+const blockBox = document.getElementById("block");
+
+function startGame() {
+    blockBox.style.zIndex = 2;
+    colorOne.id = null;
+    colorTwo.id = null;
+    tmp = 0;
+    const boxes = document.getElementsByClassName('box');
+    theTimer.resetTimer();
+    userStep.resetCurrentStep();
+    colorBox = colorBoxBorder();
+    for (var i = 0; i < gameBord.length; i++){
+        boxes[i].style.backgroundColor = "white";
+        gameBord[i] = 0;
+    }
+    blockBox.style.zIndex = 0;
+}
+
 
 async function updateCol(numb) {
-    const blockBox = document.getElementById("block");
     const id = numb;
     if (!gameBord[id]) {
-        if (userStep.current === 0) {
+        if (userStep.current == 0) {
             theTimer.timeStart();
         }
         if (colorOne.id == null) {
@@ -125,9 +150,9 @@ async function updateCol(numb) {
                 blockBox.style.zIndex = 2;
                 await sleep(1000);
                 const boxOne = document.getElementById(colorOne.id + 1);
-                boxOne.style.background = "white";
+                boxOne.style.backgroundColor = "white";
                 const boxTwo = document.getElementById(colorTwo.id + 1);
-                boxTwo.style.background = "white";
+                boxTwo.style.backgroundColor = "white";
             }
             colorOne.id = null;
             colorTwo.id = null;
